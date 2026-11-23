@@ -1,3 +1,4 @@
+import authRoutes from "./routes/authRoutes.js";
 import prisma from "./config/prisma.js";
 import express from "express";
 import cors from "cors";
@@ -12,6 +13,7 @@ app.use(cors({
 }));
 
 app.use(express.json());
+app.use("/api/auth", authRoutes);
 
 // Welcome route
 app.get("/", (req, res) => {
