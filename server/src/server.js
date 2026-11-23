@@ -1,4 +1,4 @@
-
+import prisma from "./config/prisma.js";
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
@@ -32,6 +32,25 @@ app.get("/api/test", (req, res) => {
 });
 
 const PORT = process.env.PORT || 5000;
+
+// Database connection test
+app.get("/api/db-test", async (req, res) => {
+  try {
+    await prisma.$queryRaw`SELECT 1`;
+
+    res.json({
+      success: true,
+      message: "PennyWise database connected successfully!",
+    });
+  } catch (error) {
+    console.error("Database connection error:", error);
+
+    res.status(500).json({
+      success: false,
+      message: "Database connection failed",
+    });
+  }
+});
 
 app.listen(PORT, () => {
   console.log(`PennyWise server running on port ${PORT}`);
