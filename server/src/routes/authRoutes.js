@@ -3,8 +3,14 @@ import express from "express";
 
 import {
   registerUser,
-  loginUser
+  loginUser,
+  getMe
 } from "../controllers/authController.js";
+
+import authMiddleware from "../middleware/authMiddleware.js";
+
+// Get currently logged-in user
+router.get("/me", authMiddleware, getMe);
 
 const router = express.Router();
 

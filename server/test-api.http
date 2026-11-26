@@ -17,3 +17,7 @@ Content-Type: application/json
   "email": "philip.test@example.com",
   "password": "Password123"
 }
+
+
+### Test protected route without token
+GET http://localhost:5000/api/protected
