@@ -9,15 +9,16 @@ import {
 
 import authMiddleware from "../middleware/authMiddleware.js";
 
-// Get currently logged-in user
-router.get("/me", authMiddleware, getMe);
-
+// Create the router first
 const router = express.Router();
 
-// Register a new user
+// Registration route
 router.post("/register", registerUser);
 
-// Login an existing user
+// Login route
 router.post("/login", loginUser);
+
+// Get currently logged-in user
+router.get("/me", authMiddleware, getMe);
 
 export default router;

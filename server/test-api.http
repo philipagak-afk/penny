@@ -21,3 +21,9 @@ Content-Type: application/json
 
 ### Test protected route without token
 GET http://localhost:5000/api/protected
+
+
+### Get currently logged-in user
+GET http://localhost:5000/api/auth/me
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc5NTY4NzE2NywiZXhwIjoxNzk1NzczNTY3fQ.sfbHGcSppeyK6Ydl5DIeEeQ38tOmL8GN00dEW3cDQ8g
+
