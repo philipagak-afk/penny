@@ -75,8 +75,6 @@ export const registerUser = async (req, res) => {
 };
 
 
-import jwt from "jsonwebtoken";
-
 // Login an existing user
 export const loginUser = async (req, res) => {
   try {

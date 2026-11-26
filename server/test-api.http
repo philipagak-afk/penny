@@ -7,3 +7,13 @@ Content-Type: application/json
   "email": "philip.test@example.com",
   "password": "Password123"
 }
+
+
+### Login an existing user
+POST http://localhost:5000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "philip.test@example.com",
+  "password": "Password123"
+}
