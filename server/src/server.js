@@ -1,3 +1,4 @@
+import authMiddleware from "./middleware/authMiddleware.js";
 import authRoutes from "./routes/authRoutes.js";
 import prisma from "./config/prisma.js";
 import express from "express";
@@ -32,6 +33,15 @@ app.get("/api/test", (req, res) => {
     message: "React successfully connected to PennyWise backend!",
     application: "PennyWise",
     version: "1.0.0"
+  });
+});
+
+// Protected test route
+app.get("/api/protected", authMiddleware, (req, res) => {
+  res.json({
+    success: true,
+    message: "Welcome! You are authenticated.",
+    userId: req.user.userId,
   });
 });
 
