@@ -1,4 +1,4 @@
-
+import jwt from "jsonwebtoken";
 import prisma from "../config/prisma.js";
 import bcrypt from "bcrypt";
 
@@ -70,6 +70,81 @@ export const registerUser = async (req, res) => {
     return res.status(500).json({
       success: false,
       message: "Something went wrong during registration",
+    });
+  }
+};
+
+
+import jwt from "jsonwebtoken";
+
+// Login an existing user
+export const loginUser = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    // 1. Check required fields
+    if (!email || !password) {
+      return res.status(400).json({
+        success: false,
+        message: "Please provide email and password",
+      });
+    }
+
+    // 2. Normalize email
+    const normalizedEmail = email.trim().toLowerCase();
+
+    // 3. Find user in database
+    const user = await prisma.user.findUnique({
+      where: {
+        email: normalizedEmail,
+      },
+    });
+
+    if (!user) {
+      return res.status(401).json({
+        success: false,
+        message: "Invalid email or password",
+      });
+    }
+
+    // 4. Compare password with stored hash
+    const isPasswordValid = await bcrypt.compare(
+      password,
+      user.password
+    );
+
+    if (!isPasswordValid) {
+      return res.status(401).json({
+        success: false,
+        message: "Invalid email or password",
+      });
+    }
+
+    // 5. Generate JWT token
+    const token = jwt.sign(
+      { userId: user.id },
+      process.env.JWT_SECRET,
+      { expiresIn: process.env.JWT_EXPIRES_IN || "1d" }
+    );
+
+    
+    return res.status(200).json({
+      success: true,
+      message: "Login successful!",
+      token,
+      user: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+      },
+    });
+
+  } catch (error) {
+    console.error("Login error:", error);
+
+    return res.status(500).json({
+      success: false,
+      message: "Something went wrong during login",
     });
   }
 };
