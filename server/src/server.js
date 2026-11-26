@@ -15,12 +15,7 @@ app.use(cors({
 app.use(express.json());
 app.use("/api/auth", authRoutes);
 
-app.get("/api/auth/test", (req, res) => {
-  res.json({
-    success: true,
-    message: "Authentication routes are working!"
-  });
-});
+
 
 // Welcome route
 app.get("/", (req, res) => {
